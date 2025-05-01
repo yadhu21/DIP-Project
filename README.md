@@ -22,7 +22,7 @@ This project implements a license plate recognition system using EasyOCR and Ope
 
    ```bash
    git clone https://yadhu21/DIP-Project.git
-   cd license-plate-recognition
+   cd DIP-Project
    ```
 
 
@@ -53,13 +53,13 @@ This project implements a license plate recognition system using EasyOCR and Ope
 
 1. **Prepare Your Video File**
 
-   - Place your video file (e.g., `video.mp4`) in the project directory.
+   - Place your video file (e.g., `pexels-taryn-elliott-5309381 (1080p).mp4`) in the project directory.
    - Update the `video_path` variable in the script if necessary.
 
 2. **Run the Script**
 
    ```bash
-   python license_plate_recognition.py
+   python pro.py
    ```
 
 
@@ -88,11 +88,11 @@ This project implements a license plate recognition system using EasyOCR and Ope
 
 
 ```plaintext
-license-plate-recognition/
+DIP-Project/
 ├── .venv/                   # Virtual environment directory
-├── license_plate_recognition.py  # Main script
+├── pro.py  # Main script
 ├── requirements.txt         # Python dependencies
-├── video.mp4                # Input video file
+├── pexels-taryn-elliott-5309381 (1080p).mp4.mp4                # Input video file
 └── README.md                # Project documentation
 ```
 
