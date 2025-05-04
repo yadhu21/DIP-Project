@@ -1,84 +1,208 @@
-🚗 Automatic Number Plate Recognition (ANPR) from Video
+## 🚗 Automatic Number Plate Recognition (ANPR) from Video
 
-👥 Team Members
+### 👥 Team Members
 
-Yadhu Krishnan C K
-Gagan P M
-📌 Problem Statement
+| Name                | 
+| ------------------- | 
+| Yadhu Krishnan C K  | 
+| Gagan P M           | 
+
+---
+
+### 📌 Problem Statement
 
 Automatic Number Plate Recognition (ANPR) is essential in traffic surveillance, law enforcement, toll collection, and smart city systems. This project aims to detect and recognize vehicle number plates from video footage using image processing and Optical Character Recognition (OCR).
 
-⚖️ Technologies Used
+---
 
-Python
+### ⚖️ Technologies Used
 
-OpenCV – For image preprocessing and contour detection.
+* **Python**
+* **OpenCV** – For image preprocessing and contour detection.
+* **EasyOCR** – For text recognition from processed plate images.
+* **NumPy** – For image array manipulation.
+* **Regular Expressions** – For cleaning and standardizing detected plate text.
 
-EasyOCR – For text recognition from processed plate images.
+---
 
-NumPy – For image array manipulation.
+### ⚙️ Program Flow & Techniques
 
-Regular Expressions – For cleaning and standardizing detected plate text.
+1. **Video Capture:**
 
-⚙️ Program Flow & Techniques
+   * Load video using `cv2.VideoCapture`.
+   * Frame-by-frame processing to detect number plates.
 
-Video Capture:
+2. **Preprocessing:**
 
-Load video using cv2.VideoCapture.
+   * Convert frame to grayscale.
+   * Apply bilateral filtering to preserve edges.
+   * Detect edges using Canny edge detection.
+   * Apply morphological transformations to close gaps and enhance contours.
 
-Frame-by-frame processing to detect number plates.
+3. **Contour Filtering:**
 
-Preprocessing:
+   * Find contours and select top 15 based on area.
+   * Filter based on aspect ratio and area to locate potential plate regions.
+   * Draw bounding box around detected region.
 
-Convert frame to grayscale.
+4. **OCR Processing:**
 
-Apply bilateral filtering to preserve edges.
+   * Resize the cropped plate region for better OCR accuracy.
+   * Apply adaptive thresholding and morphological close operations.
+   * Use EasyOCR to extract text and confidence values.
+   * Clean detected text using regex to retain only alphanumeric characters.
 
-Detect edges using Canny edge detection.
+5. **Post-Processing:**
 
-Apply morphological transformations to close gaps and enhance contours.
+   * Store all detected plate texts and their confidence scores.
+   * Avoid duplicate detections by comparing with the last detected value.
+   * Use `difflib.SequenceMatcher` to identify similar plate strings.
+   * Determine the most frequent plate detected and calculate average confidence.
 
-Contour Filtering:
+---
 
-Find contours and select top 15 based on area.
+### 📈 Output
 
-Filter based on aspect ratio and area to locate potential plate regions.
+* Prints each detected plate with confidence.
+* Displays a live video frame with bounding boxes.
+* On completion, prints:
 
-Draw bounding box around detected region.
+  * Most frequently detected plate.
+  * Number of times detected.
+  * Average confidence score across similar detections.
 
-OCR Processing:
+---
 
-Resize the cropped plate region for better OCR accuracy.
+### 📝 Example Output
 
-Apply adaptive thresholding and morphological close operations.
+```
+Detected Plate Number: KL58AB1234 | Confidence: 0.86
+Detected Plate Number: KL58AB1234 | Confidence: 0.90
 
-Use EasyOCR to extract text and confidence values.
+Most Frequent Detected Plate Number: KL58AB1234 (Detected 2 times)
+Average Confidence for KL58AB1234: 0.88
+```
 
-Clean detected text using regex to retain only alphanumeric characters.
+---
 
-Post-Processing:
+### 📦 How to Run
 
-Store all detected plate texts and their confidence scores.
+1. Clone the repository.
+2. Install dependencies:
 
-Avoid duplicate detections by comparing with the last detected value.
+   ```bash
+   pip install opencv-python numpy easyocr
+   ```
+3. Place your video in the working directory.
+4. Run the script:
 
-Use difflib.SequenceMatcher to identify similar plate strings.
+   ```bash
+   python anpr_script.py
+   ```
+## 🚗 Automatic Number Plate Recognition (ANPR) from Video
 
-Determine the most frequent plate detected and calculate average confidence.
+### 👥 Team Members
 
-📈 Output
+| Name        | Role              |
+| ----------- | ----------------- |
+| Yadhu       | Backend Developer |
+| \[Member 2] | Video Processing  |
+| \[Member 3] | OCR Integration   |
+| \[Member 4] | Documentation     |
 
-Prints each detected plate with confidence.
+---
 
-Displays a live video frame with bounding boxes.
+### 📌 Problem Statement
 
-On completion, prints:
+Automatic Number Plate Recognition (ANPR) is essential in traffic surveillance, law enforcement, toll collection, and smart city systems. This project aims to detect and recognize vehicle number plates from video footage using image processing and Optical Character Recognition (OCR).
 
-Most frequently detected plate.
+---
 
-Number of times detected.
+### ⚖️ Technologies Used
 
-Average confidence score across similar detections.
+* **Python**
+* **OpenCV** – For image preprocessing and contour detection.
+* **EasyOCR** – For text recognition from processed plate images.
+* **NumPy** – For image array manipulation.
+* **Regular Expressions** – For cleaning and standardizing detected plate text.
+
+---
+
+### ⚙️ Program Flow & Techniques
+
+1. **Video Capture:**
+
+   * Load video using `cv2.VideoCapture`.
+   * Frame-by-frame processing to detect number plates.
+
+2. **Preprocessing:**
+
+   * Convert frame to grayscale.
+   * Apply bilateral filtering to preserve edges.
+   * Detect edges using Canny edge detection.
+   * Apply morphological transformations to close gaps and enhance contours.
+
+3. **Contour Filtering:**
+
+   * Find contours and select top 15 based on area.
+   * Filter based on aspect ratio and area to locate potential plate regions.
+   * Draw bounding box around detected region.
+
+4. **OCR Processing:**
+
+   * Resize the cropped plate region for better OCR accuracy.
+   * Apply adaptive thresholding and morphological close operations.
+   * Use EasyOCR to extract text and confidence values.
+   * Clean detected text using regex to retain only alphanumeric characters.
+
+5. **Post-Processing:**
+
+   * Store all detected plate texts and their confidence scores.
+   * Avoid duplicate detections by comparing with the last detected value.
+   * Use `difflib.SequenceMatcher` to identify similar plate strings.
+   * Determine the most frequent plate detected and calculate average confidence.
+
+---
+
+### 📈 Output
+
+* Prints each detected plate with confidence.
+* Displays a live video frame with bounding boxes.
+* On completion, prints:
+
+  * Most frequently detected plate.
+  * Number of times detected.
+  * Average confidence score across similar detections.
+
+---
+
+### 📝 Example Output
+
+```
+Detected Plate Number: KL58AB1234 | Confidence: 0.86
+Detected Plate Number: KL58AB1234 | Confidence: 0.90
+
+Most Frequent Detected Plate Number: KL58AB1234 (Detected 2 times)
+Average Confidence for KL58AB1234: 0.88
+```
+
+---
+
+### 📦 How to Run
+
+1. Clone the repository.
+2. Install dependencies:
+
+   ```bash
+   pip install opencv-python numpy easyocr
+   ```
+3. Place your video in the working directory.
+4. Run the script:
+
+   ```bash
+   python anpr_script.py
+   ```
+
 ## Features
 
 - **License Plate Detection**: Utilizes OpenCV to detect license plates in video frames.
