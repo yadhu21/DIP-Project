@@ -1,7 +1,84 @@
-# License Plate Recognition with EasyOCR and OpenCV
+🚗 Automatic Number Plate Recognition (ANPR) from Video
 
-This project implements a license plate recognition system using EasyOCR and OpenCV. It processes video input to detect and recognize vehicle license plates, highlighting the most frequently detected plate.
+👥 Team Members
 
+Yadhu Krishnan C K
+Gagan P M
+📌 Problem Statement
+
+Automatic Number Plate Recognition (ANPR) is essential in traffic surveillance, law enforcement, toll collection, and smart city systems. This project aims to detect and recognize vehicle number plates from video footage using image processing and Optical Character Recognition (OCR).
+
+⚖️ Technologies Used
+
+Python
+
+OpenCV – For image preprocessing and contour detection.
+
+EasyOCR – For text recognition from processed plate images.
+
+NumPy – For image array manipulation.
+
+Regular Expressions – For cleaning and standardizing detected plate text.
+
+⚙️ Program Flow & Techniques
+
+Video Capture:
+
+Load video using cv2.VideoCapture.
+
+Frame-by-frame processing to detect number plates.
+
+Preprocessing:
+
+Convert frame to grayscale.
+
+Apply bilateral filtering to preserve edges.
+
+Detect edges using Canny edge detection.
+
+Apply morphological transformations to close gaps and enhance contours.
+
+Contour Filtering:
+
+Find contours and select top 15 based on area.
+
+Filter based on aspect ratio and area to locate potential plate regions.
+
+Draw bounding box around detected region.
+
+OCR Processing:
+
+Resize the cropped plate region for better OCR accuracy.
+
+Apply adaptive thresholding and morphological close operations.
+
+Use EasyOCR to extract text and confidence values.
+
+Clean detected text using regex to retain only alphanumeric characters.
+
+Post-Processing:
+
+Store all detected plate texts and their confidence scores.
+
+Avoid duplicate detections by comparing with the last detected value.
+
+Use difflib.SequenceMatcher to identify similar plate strings.
+
+Determine the most frequent plate detected and calculate average confidence.
+
+📈 Output
+
+Prints each detected plate with confidence.
+
+Displays a live video frame with bounding boxes.
+
+On completion, prints:
+
+Most frequently detected plate.
+
+Number of times detected.
+
+Average confidence score across similar detections.
 ## Features
 
 - **License Plate Detection**: Utilizes OpenCV to detect license plates in video frames.
