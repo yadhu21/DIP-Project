@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 import easyocr
 import re
-from collections import Counter
+from collections import Counter, defaultdict
 from difflib import SequenceMatcher
 
 def is_similar(a, b, threshold=0.8):
@@ -16,6 +16,7 @@ if not cap.isOpened():
     exit()
 
 raw_plate_numbers = [] 
+plate_confidences = defaultdict(list) 
 last_detected = ""
 
 while True:
@@ -51,12 +52,20 @@ while True:
 
         result = reader.readtext(plate_thresh)
         if result:
-            detected_text = " ".join([detection[1] for detection in result])
-            detected_text = re.sub(r'[^A-Z0-9]', '', detected_text.upper())  # Alphanumeric cleanup
+            text_parts = []
+            total_confidence = 0
+            for detection in result:
+                text_parts.append(detection[1])
+                total_confidence += detection[2]
+
+            detected_text = " ".join(text_parts)
+            confidence_score = total_confidence / len(result) 
+            detected_text = re.sub(r'[^A-Z0-9]', '', detected_text.upper())
 
             if detected_text and detected_text != last_detected:
                 raw_plate_numbers.append(detected_text)
-                print("Detected Plate Number:", detected_text)
+                plate_confidences[detected_text].append(confidence_score)
+                print(f"Detected Plate Number: {detected_text} | Confidence: {confidence_score:.2f}")
                 last_detected = detected_text
         else:
             print("No text detected.")
@@ -70,24 +79,18 @@ while True:
 cap.release()
 cv2.destroyAllWindows()
 
-# Step 1: Find the most frequent number plate
-counter = Counter(raw_plate_numbers)
-most_common_plate, _ = counter.most_common(1)[0]
-
-# Step 2: Correct similar plate entries
-corrected_plates = []
-for plate in raw_plate_numbers:
-    if is_similar(plate, most_common_plate):
-        corrected_plates.append(most_common_plate)
-    else:
-        corrected_plates.append(plate)
-
-# Step 3: Filter out unique plates, keeping only repeated ones
-repeated_plates = [plate for plate, count in Counter(corrected_plates).items() if count > 1]
-
 if raw_plate_numbers:
     counter = Counter(raw_plate_numbers)
     most_common_plate, count = counter.most_common(1)[0]
+
+    similar_plates = [plate for plate in raw_plate_numbers if is_similar(plate, most_common_plate)]
+    all_confidences = []
+    for plate in similar_plates:
+        all_confidences.extend(plate_confidences[plate])
+
+    average_confidence = sum(all_confidences) / len(all_confidences) if all_confidences else 0
+
     print(f"\nMost Frequent Detected Plate Number: {most_common_plate} (Detected {count} times)")
+    print(f"Average Confidence for {most_common_plate}: {average_confidence:.2f}")
 else:
     print("\nNo plates were detected.")
